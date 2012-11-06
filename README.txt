@@ -1,0 +1,1 @@
+El proyecto es ejecutable solo si tienen la ultima version de Love2D.
