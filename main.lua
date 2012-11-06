@@ -25,6 +25,7 @@ function love.load()
 	q1 = {x = 120, y = 100, w = 50, h = 50}
 	q2 = {x = 100, y = 120, w = 100, h = 100}
 	print(string.char(255)..string.char(217))
+	cargarMapa("map")
 end	
 
 function love.update( dt )

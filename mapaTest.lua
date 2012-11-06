@@ -18,6 +18,8 @@ mapa.tex = gfx.newImage('gfx/tex.png')
 mapa.tipoTex = {}
 mapa.batch = nil
 
+
+
 function mapa:init()
 
 	for i=0, mapa.ancho do
