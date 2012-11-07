@@ -29,7 +29,15 @@ function mapa:init()
 			end
 	end	
 
-	mapa.batch = gfx.newSpriteBatch(mapa.tex, 200)
+	for i=0, mapa.ancho do
+			mapa.objetos[i]={}
+			for j=0, mapa.alto do
+				mapa.objetos[i][j] = {}
+			end
+	end	
+
+
+	mapa.batch = gfx.newSpriteBatch(mapa.tex, 300)
 	mapa.tipoTex[1] = gfx.newQuad(0, 0, 327, 51, mapa.tex:getWidth(), mapa.tex:getHeight())
 	mapa.tipoTex[2] = gfx.newQuad(0, 51, 68, 189, mapa.tex:getWidth(), mapa.tex:getHeight())
 	mapa.tipoTex[3] = gfx.newQuad(68, 51, 89, 95, mapa.tex:getWidth(), mapa.tex:getHeight())
@@ -44,24 +52,30 @@ function mapa:ubicarObjeto(objeto)
 			mapa.matrizObjetos[math.floor(i)][math.floor(j)][objeto] = objeto
 		end
 	end
-	mapa.objetos[table.getn(mapa.objetos)+1] = objeto
+	local dir = mapa.objetos[math.floor(objeto.cuadColi.x/mapa.sizeCelda)][math.floor(objeto.cuadColi.y/mapa.sizeCelda)]
+	dir[table.getn(dir)+1] = objeto
 
 end
 
 function mapa:eliminarObjeto( x, y )
-	for i=table.getn(mapa.objetos) , 1,-1 do
-		local obj = mapa.objetos[i]
-		if colision(obj.cuadColi, {x = x, y = y, w = 1, h = 1}) then
-			for k = i, table.getn(mapa.objetos) do
-				mapa.objetos[k] = mapa.objetos[k+1]
-				mapa.objetos[k+1] = nil
-			end
-			for i=math.floor(obj.cuadColi.x/mapa.sizeCelda), ((obj.cuadColi.x + obj.cuadColi.w)/mapa.sizeCelda) do
-				for j=math.floor(obj.cuadColi.y/mapa.sizeCelda), ((obj.cuadColi.y + obj.cuadColi.h)/mapa.sizeCelda) do
-					mapa.matrizObjetos[math.floor(i)][math.floor(j)][obj] = nil
+	
+	for f = 0, table.getn(mapa.objetos) do
+		for j = 0,  table.getn(mapa.objetos[f]) do
+			for i=table.getn(mapa.objetos[f][j]) , 1,-1 do
+				local obj = mapa.objetos[f][j][i]
+				if colision(obj.cuadColi, {x = x, y = y, w = 1, h = 1}) then
+					for k = i, table.getn(mapa.objetos[f][j]) do
+						mapa.objetos [f][j][k] = mapa.objetos[f][j][k+1]
+						mapa.objetos [f][j][k+1] = nil
+					end
+					for i=math.floor(obj.cuadColi.x/mapa.sizeCelda), ((obj.cuadColi.x + obj.cuadColi.w)/mapa.sizeCelda) do
+						for j=math.floor(obj.cuadColi.y/mapa.sizeCelda), ((obj.cuadColi.y + obj.cuadColi.h)/mapa.sizeCelda) do
+							mapa.matrizObjetos[math.floor(i)][math.floor(j)][obj] = nil
+						end
+					end
+					break
 				end
 			end
-			break
 		end
 	end
 end
@@ -81,12 +95,25 @@ function mapa:colisiona( x, y, w, h )
 end
 
 function mapa:update()
+	local wt = gfx.getWidth()
+	local ht = gfx.getHeight()
+
 	mapa.batch:bind()
     mapa.batch:clear()
-    for i, v in pairs(mapa.objetos)do
-        mapa.batch:addq(v.quad, v.cuadColi.x, v.cuadColi.y)
+
+    for i = math.floor(((mono.cuadColi.x - wt)/mapa.sizeCelda)-3), math.floor(((mono.cuadColi.x + wt)/mapa.sizeCelda)+3) do
+    	if i>=0 then
+    		for j = math.floor(((mono.cuadColi.y - ht)/mapa.sizeCelda)-3), math.floor(((mono.cuadColi.y + ht)/mapa.sizeCelda)+3) do
+    			if j >=0 then
+    				for a, v in pairs(mapa.objetos[i][j]) do
+    					mapa.batch:addq(v.quad, v.cuadColi.x, v.cuadColi.y)
+    				end
+				end
+    		end
+    	end
   	end
     mapa.batch:unbind()
+
 end
 
 function mapa:draw( )

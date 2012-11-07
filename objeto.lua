@@ -1,5 +1,5 @@
 local obj = {}
-	obj.cuadColi =
+obj.cuadColi =
 	{
 		x = 0,
 		y = 0,
@@ -13,14 +13,14 @@ local obj = {}
 	obj.tipo = 0
 	obj.quad = 0
 	obj.vx = 250
-	obj.vy = 500
+	obj.vy = 600
 	obj.aceX = 100
-	obj.aceY = 1000
+	obj.aceY = 1600
 
 	obj.vxReal = obj.vx
 	obj.vyReal = obj.vy
 
-	obj.tiempoSalto = 0.2
+	obj.tiempoSalto = 0.1
 	obj.saltando = 0
 
 	obj.estado = "normal"
@@ -62,31 +62,28 @@ function obj:update( dt )
 	if obj.estado == "cayendo" and obj.lugar == "aire" then
 		local coli, cuad = mapa:colisiona(obj.cuadColi.x, obj.cuadColi.y + obj.vyReal*dt, obj.cuadColi.w, obj.cuadColi.h)
 		if  not coli then
-			--if obj.vyReal > obj.vy then
-				--obj.cuadColi.y = obj.cuadColi.y + obj.vyReal*dt
-			--else	
 				obj.cuadColi.y = obj.cuadColi.y + obj.vyReal*dt
 				obj.vyReal = obj.vyReal + obj.aceY * dt
-			--end
 		else
 			obj.lugar = "tierra"
 			obj.estado = "normal"
-			obj.vyReal = obj.vy
+			obj.vyReal = 0
 		end
 	end
 
 	if love.keyboard.isDown(" ") and obj.lugar == "tierra" then
 		obj.estado = "saltando"
 		obj.lugar = "aire"
+		obj.vyReal = obj.vy
 	end
 
-	if love.keyboard.isDown("a") or coliser then
+	if love.keyboard.isDown("a") or love.keyboard.isDown("left") or coliser then
 		local coli, cuad = mapa:colisiona(obj.cuadColi.x - obj.vx*dt, obj.cuadColi.y, obj.cuadColi.w, obj.cuadColi.h)
 		if  not coli or coliser then
 			obj.cuadColi.x = obj.cuadColi.x - obj.vx*dt
 		end
 	end
-	if love.keyboard.isDown("d") then
+	if love.keyboard.isDown("d") or love.keyboard.isDown("right")then
 		local coli, cuad = mapa:colisiona(obj.cuadColi.x + obj.vx*dt, obj.cuadColi.y, obj.cuadColi.w, obj.cuadColi.h)
 		if  not coli then
 			obj.cuadColi.x = obj.cuadColi.x + obj.vx*dt

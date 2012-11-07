@@ -8,13 +8,16 @@ colorDef = {255,255,255,255}
 
 require("mapaTest")
 require("editor")
+require("caca")
 
 function love.load()
 	initEditor()
 	mono = new("objeto")
 	mono:init(100, 60, 30, 30, 0, nil)
-	--image = getArt("01. The Turbulence Of Awakening.mp3")
-	print(image)
+	
+	caca1 = Caca:new(10, 20, 30, 40)
+	caca2 = Caca:new(50, 60, 70, 80)
+
 	cf = 0
 	vcf = 200
 	mapa:init()
