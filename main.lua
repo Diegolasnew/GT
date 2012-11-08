@@ -10,11 +10,12 @@ require("mapaTest")
 require("editor")
 require("caca")
 
+hola = gfx.newImage("gfx/megaNOr.png")
+
 function love.load()
 	initEditor()
 	mono = new("objeto")
-	mono:init(100, 60, 30, 30, 0, nil)
-	print("HAAAAAAAAAAAAAAAAAAA")
+	mono:init(100, 60, 25, 30, 0, nil)
 	cf = 0
 	vcf = 200
 	mapa:init()
@@ -24,17 +25,10 @@ function love.load()
 	translate = {1, 2}
 	q1 = {x = 120, y = 100, w = 50, h = 50}
 	q2 = {x = 100, y = 120, w = 100, h = 100}
-	print(string.char(255)..string.char(217))
 	cargarMapa("map")
 
 	local asd = {}
-	asd[1] = "hola"
-	asd[3] = "queTal"
-	asd[4] = "D:"
-	for i, v in pairs(asd) do
-		print(i)
-	end
-	print("RRRRRRRRRRRRR")
+
 end	
 
 function love.update( dt )
@@ -149,9 +143,9 @@ function love.draw()
 	--gfx.rectangle( "fill", mono.cuadColi.x, mono.cuadColi.y, mono.cuadColi.w, mono.cuadColi.h)
 	gfx.setColor(colorDef)
 	--gfx.draw(image, 100, 100)
-	
 	mono:draw()
 
+	gfx.draw(hola, 0,0)
 	if editor then
 		drawEditor()	
 	end

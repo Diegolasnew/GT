@@ -9,8 +9,12 @@ end
 
 function guardarMapa(  )
 	cont = ""
-	for k, v in pairs(mapa.objetos) do
-		cont = cont .. v.tipo .. " " .. v.cuadColi.x .. " " ..v.cuadColi.y .. " " .. v.cuadColi.w .. " " .. v.cuadColi.h .. "/"
+	for k, r in pairs(mapa.objetos) do
+		for i, k in pairs(r) do
+			for j, v in pairs(k) do
+				cont = cont .. v.tipo .. " " .. v.cuadColi.x .. " " ..v.cuadColi.y .. " " .. v.cuadColi.w .. " " .. v.cuadColi.h .. "/"
+			end
+		end
 	end
 	fsy.write("map.mep", cont)
 end

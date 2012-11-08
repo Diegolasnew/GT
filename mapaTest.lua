@@ -73,7 +73,7 @@ function mapa:eliminarObjeto( x, y )
 							mapa.matrizObjetos[math.floor(i)][math.floor(j)][obj] = nil
 						end
 					end
-					break
+					return
 				end
 			end
 		end

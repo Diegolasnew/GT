@@ -29,6 +29,7 @@ obj.cuadColi =
 	obj.sprite = new("spriteAnim")
 	obj.tiempoSpt = 0.1
 	obj.tiempoSptReal = 0
+	obj.orientacion = 1
 
 function obj:init(x, y, ancho, alto, tipo, quad)
 	print("ooo1")
@@ -44,8 +45,8 @@ function obj:init(x, y, ancho, alto, tipo, quad)
 end
 
 function obj:update( dt )
-	local coliser = mapa:colisiona(obj.cuadColi.x, obj.cuadColi.y , obj.cuadColi.w, obj.cuadColi.h)
-
+	local coliser = mapa:colisiona(obj.cuadColi.x, obj.cuadColi.y +4, obj.cuadColi.w, obj.cuadColi.h)
+	local estado = obj.estado
 	if not coliser and (obj.estado == "normal" or obj.lugar == "tierra") then
 		obj.estado = "cayendo"
 		obj.lugar = "aire"
@@ -85,25 +86,47 @@ function obj:update( dt )
 		obj.vyReal = obj.vy
 	end
 
-	if love.keyboard.isDown("a") or love.keyboard.isDown("left") or coliser then
+	if love.keyboard.isDown("a") or love.keyboard.isDown("left") then
 		local coli, cuad = mapa:colisiona(obj.cuadColi.x - obj.vx*dt, obj.cuadColi.y, obj.cuadColi.w, obj.cuadColi.h)
-		if  not coli or coliser then
+		if  not coli then
 			obj.cuadColi.x = obj.cuadColi.x - obj.vx*dt
-			--obj.estado = "corriendo"
+			obj.orientacion = -1
+			if obj.lugar == "tierra" then
+				obj.estado = "corriendo"
+			end
+		else
+			if obj.lugar == "tierra" then
+				obj.estado = "normal"
+			end
 		end
+
 	end
 
 	if love.keyboard.isDown("d") or love.keyboard.isDown("right")then
 		local coli, cuad = mapa:colisiona(obj.cuadColi.x + obj.vx*dt, obj.cuadColi.y, obj.cuadColi.w, obj.cuadColi.h)
 		if  not coli then
 			obj.cuadColi.x = obj.cuadColi.x + obj.vx*dt
-			--obj.estado = "corriendo"
+			obj.orientacion = 1
+			if obj.lugar == "tierra" then
+				obj.estado = "corriendo"
+			end
+		else
+			if obj.lugar == "tierra" then
+				obj.estado = "normal"
+			end
 		end
 	end
 
+	if obj.lugar == "tierra" and not love.keyboard.isDown("right") and not love.keyboard.isDown("left") then
+		obj.estado = "normal"
+	end
+
+	if estado ~= obj.estado then
+		obj.tiempoSptReal = obj.tiempoSpt+1
+	end
 
 	if obj.tiempoSptReal >= obj.tiempoSpt then
-		obj.sprite:siguiente("corriendo")
+		obj.sprite:siguiente(obj.estado, obj.orientacion)
 		obj.tiempoSptReal = 0
 	end
 
@@ -114,7 +137,7 @@ end
 
 
 function obj:draw()
-	gfx.draw(obj.sprite.batch, obj.cuadColi.x, obj.cuadColi.y)
+	gfx.draw(obj.sprite.batchs[obj.sprite.estado], obj.cuadColi.x, obj.cuadColi.y)
 end
 
 return obj
