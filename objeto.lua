@@ -12,7 +12,7 @@ obj.cuadColi =
 
 	obj.tipo = 0
 	obj.quad = 0
-	obj.vx = 250
+	obj.vx = 170
 	obj.vy = 600
 	obj.aceX = 100
 	obj.aceY = 1600
@@ -114,7 +114,7 @@ end
 
 
 function obj:draw()
-	gfx.draw(obj.sprite.batch, obj.cuadColi.x, obj.cuadColi.y, 0, 3, 3)
+	gfx.draw(obj.sprite.batch, obj.cuadColi.x, obj.cuadColi.y)
 end
 
 return obj
