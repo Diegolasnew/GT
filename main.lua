@@ -14,10 +14,7 @@ function love.load()
 	initEditor()
 	mono = new("objeto")
 	mono:init(100, 60, 30, 30, 0, nil)
-	
-	caca1 = Caca:new(10, 20, 30, 40)
-	caca2 = Caca:new(50, 60, 70, 80)
-
+	print("HAAAAAAAAAAAAAAAAAAA")
 	cf = 0
 	vcf = 200
 	mapa:init()
@@ -29,6 +26,15 @@ function love.load()
 	q2 = {x = 100, y = 120, w = 100, h = 100}
 	print(string.char(255)..string.char(217))
 	cargarMapa("map")
+
+	local asd = {}
+	asd[1] = "hola"
+	asd[3] = "queTal"
+	asd[4] = "D:"
+	for i, v in pairs(asd) do
+		print(i)
+	end
+	print("RRRRRRRRRRRRR")
 end	
 
 function love.update( dt )
@@ -139,10 +145,13 @@ function love.draw()
 	love.graphics.line(0,0,0,10000)
 	gfx.setColor(colorDef)
 	mapa:draw()
-	gfx.setColor(65, 50, 255,255)
-	gfx.rectangle( "fill", mono.cuadColi.x, mono.cuadColi.y, mono.cuadColi.w, mono.cuadColi.h)
+	--gfx.setColor(65, 50, 255,255)
+	--gfx.rectangle( "fill", mono.cuadColi.x, mono.cuadColi.y, mono.cuadColi.w, mono.cuadColi.h)
 	gfx.setColor(colorDef)
 	--gfx.draw(image, 100, 100)
+	
+	mono:draw()
+
 	if editor then
 		drawEditor()	
 	end

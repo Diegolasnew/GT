@@ -26,7 +26,15 @@ obj.cuadColi =
 	obj.estado = "normal"
 	obj.lugar = "tierra"
 
+	obj.sprite = new("spriteAnim")
+	obj.tiempoSpt = 0.1
+	obj.tiempoSptReal = 0
+
 function obj:init(x, y, ancho, alto, tipo, quad)
+	print("ooo1")
+	obj.sprite:init()
+	print("ooo2")
+
 	obj.cuadColi.x = x
 	obj.cuadColi.y = y
 	obj.cuadColi.w = ancho
@@ -81,14 +89,32 @@ function obj:update( dt )
 		local coli, cuad = mapa:colisiona(obj.cuadColi.x - obj.vx*dt, obj.cuadColi.y, obj.cuadColi.w, obj.cuadColi.h)
 		if  not coli or coliser then
 			obj.cuadColi.x = obj.cuadColi.x - obj.vx*dt
+			--obj.estado = "corriendo"
 		end
 	end
+
 	if love.keyboard.isDown("d") or love.keyboard.isDown("right")then
 		local coli, cuad = mapa:colisiona(obj.cuadColi.x + obj.vx*dt, obj.cuadColi.y, obj.cuadColi.w, obj.cuadColi.h)
 		if  not coli then
 			obj.cuadColi.x = obj.cuadColi.x + obj.vx*dt
+			--obj.estado = "corriendo"
 		end
 	end
+
+
+	if obj.tiempoSptReal >= obj.tiempoSpt then
+		obj.sprite:siguiente("corriendo")
+		obj.tiempoSptReal = 0
+	end
+
+	obj.tiempoSptReal = obj.tiempoSptReal + dt
+end
+
+
+
+
+function obj:draw()
+	gfx.draw(obj.sprite.batch, obj.cuadColi.x, obj.cuadColi.y, 0, 3, 3)
 end
 
 return obj
