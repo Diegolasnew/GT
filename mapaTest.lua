@@ -94,6 +94,12 @@ function mapa:colisiona( x, y, w, h )
 	return false
 end
 
+function mapa:borrarMapa(  )
+	mapa.matrizObjetos = {} 
+	mapa.objetos = {}
+	mapa:init()
+end
+
 function mapa:update()
 	local wt = gfx.getWidth()
 	local ht = gfx.getHeight()

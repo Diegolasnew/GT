@@ -117,7 +117,8 @@ function obj:update( dt )
 		end
 	end
 
-	if obj.lugar == "tierra" and not love.keyboard.isDown("right") and not love.keyboard.isDown("left") then
+	if obj.lugar == "tierra" and not love.keyboard.isDown("right") and not love.keyboard.isDown("left") 
+		and not love.keyboard.isDown("a") and not love.keyboard.isDown("d") then
 		obj.estado = "normal"
 	end
 

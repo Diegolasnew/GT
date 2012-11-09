@@ -25,7 +25,7 @@ function love.load()
 	translate = {1, 2}
 	q1 = {x = 120, y = 100, w = 50, h = 50}
 	q2 = {x = 100, y = 120, w = 100, h = 100}
-	cargarMapa("map")
+	cargarMapa("mepe")
 
 	local asd = {}
 
@@ -58,6 +58,9 @@ function love.keyreleased(key)
    end
    if key == "f6" then
          cargarMapa("map")
+   end
+   if key == "f8" then
+         mapa:borrarMapa("map")
    end
 end
 
@@ -108,28 +111,7 @@ end
 
 function love.draw()
 
-	if debug then
-		gfx.setColor(0, 255, 0, 255)
-    	gfx.print("x = ".. mono.cuadColi.x, 10, 10)
-    	gfx.print("y = ".. mono.cuadColi.y, 10, 30)
-    	gfx.print("c = ".. tostring (colis), 10, 50)
-    	gfx.print("x2 = ".. mono.cuadColi.x + mono.cuadColi.w, 10, 70)
-    	gfx.print("y2 = ".. mono.cuadColi.y + mono.cuadColi.h, 10, 90)
-    	if editor then
-    		local x, y = love.mouse.getPosition()
-    		gfx.print("xMouseReal = ".. x, 160, 10)
-    		gfx.print("yMouseReal = ".. y, 160, 30)
-    		gfx.print("xMouseMapa = ".. x - translate[1], 160, 50)
-    		gfx.print("yMouseMapa = ".. y - translate[2], 160, 70)
-    		gfx.print("Objpos = ".. posObjetoEditor, 160, 90)
-    	end
-    else
-    	gfx.setColor(255,100,100,255)
-    	gfx.print("F1 Debug ", 10, 10)
-    	gfx.print("F2 Editor ", 10, 30)
-    	gfx.print("F4 Guardar Mapa ", 10, 50)
-    	gfx.print("F5 Cargar Mapa ", 10, 70)
-	end
+	gfx.push()
 
 	gfx.translate(translate[1], translate[2])
 	--gfx.setColor(cf, 255, cf,255)
@@ -149,6 +131,34 @@ function love.draw()
 	if editor then
 		drawEditor()	
 	end
+
+	gfx.pop()
+
+	if debug then
+		gfx.setColor(0, 255, 0, 255)
+    	gfx.print("x = ".. mono.cuadColi.x, 10, 10)
+    	gfx.print("y = ".. mono.cuadColi.y, 10, 30)
+    	gfx.print("c = ".. tostring (colis), 10, 50)
+    	gfx.print("x2 = ".. mono.cuadColi.x + mono.cuadColi.w, 10, 70)
+    	gfx.print("y2 = ".. mono.cuadColi.y + mono.cuadColi.h, 10, 90)
+    	if editor then
+    		local x, y = love.mouse.getPosition()
+    		gfx.print("xMouseReal = ".. x, 160, 10)
+    		gfx.print("yMouseReal = ".. y, 160, 30)
+    		gfx.print("xMouseMapa = ".. x - translate[1], 160, 50)
+    		gfx.print("yMouseMapa = ".. y - translate[2], 160, 70)
+    		gfx.print("Objpos = ".. posObjetoEditor, 160, 90)
+    	end
+    else
+    	gfx.setColor(200,150,200,255)
+    	gfx.print("F1 Debug ", 10, 10)
+    	gfx.print("F2 Editor (rueda del mouse, click izquierdo crea, click derecho elimina)", 10, 30)
+    	gfx.print("F5 Guardar Mapa ", 10, 50)
+    	gfx.print("F6 Cargar Mapa ", 10, 70)
+    	gfx.print("Movimiento: izquierda o (a), derecha o (b)", 10, 90)
+    	gfx.print("Salto: espacio ", 10, 110)
+	end
+
 end	
 
 function getArt(mp3)

@@ -10,7 +10,7 @@ function love.conf( t )
 	t.modules.sound = true
 	t.modules.thread = true
 	t.modules.physics = false
-	t.console = true			--habilita la consola
+	t.console = false			--habilita la consola
 	t.title = "GameTest"
 	t.author = "Diegolas"
 	t.screen.fullscreen = false

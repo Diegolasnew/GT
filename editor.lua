@@ -20,6 +20,7 @@ function guardarMapa(  )
 end
 
 function cargarMapa( nombreMapa )
+	mapa:borrarMapa()
 	local data = fsy.read(nombreMapa ..".mep")
 	local split = data:split("/")
 	for i, v in pairs(split) do
