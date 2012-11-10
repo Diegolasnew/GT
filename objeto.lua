@@ -12,7 +12,7 @@ obj.cuadColi =
 
 	obj.tipo = 0
 	obj.quad = 0
-	obj.vx = 170
+	obj.vx = 190
 	obj.vy = 600
 	obj.aceX = 100
 	obj.aceY = 1600
@@ -54,7 +54,7 @@ function obj:update( dt )
 
 	if obj.estado == "saltando" and obj.lugar == "aire" then
 		local coli, cuad = mapa:colisiona(obj.cuadColi.x, obj.cuadColi.y - obj.vyReal*dt, obj.cuadColi.w, obj.cuadColi.h)
-		if  not coli and obj.saltando < obj.tiempoSalto then
+		if  not coli and obj.saltando <= obj.tiempoSalto then
 			obj.cuadColi.y = obj.cuadColi.y - obj.vyReal*dt
 			obj.saltando = obj.saltando + dt
 		elseif not coli and obj.saltando > obj.tiempoSalto and obj.vyReal >= 0 then
