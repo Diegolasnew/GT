@@ -5,6 +5,8 @@ obj.cuadColi =
 		y = 0,
 		w = 0,
 		h = 0,
+		desX = 0,
+		desY = 0,
 	}
 
 	obj.minusX = 0
@@ -24,14 +26,15 @@ obj.cuadColi =
 	obj.saltando = 0
 
 
-function obj:init(x, y, ancho, alto, tipo, quad)
+function obj:init(tipo, x, y, ancho, alto, desX, desY)
 
 	obj.cuadColi.x = x
 	obj.cuadColi.y = y
 	obj.cuadColi.w = ancho
 	obj.cuadColi.h = alto
 	obj.tipo = tipo
-	obj.quad = quad
+	obj.cuadColi.desX = desX
+	obj.cuadColi.desY = desY
 end
 
 return obj

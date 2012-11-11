@@ -16,6 +16,7 @@ mapa.ancho = 70
 mapa.alto = 70
 mapa.tex = gfx.newImage('gfx/gen.png')
 mapa.tipoTex = {}
+mapa.propTex = {}
 mapa.batch = nil
 
 
@@ -40,7 +41,13 @@ function mapa:init()
 	for i, v in pairs(split) do
 		split2 = v:split(" ")
 		if (i ~= table.getn(split)) then
-			mapa.tipoTex[i] = gfx.newQuad(split2[1], split2[2], split2[3], split2[4], mapa.tex:getWidth(), mapa.tex:getHeight())		
+			mapa.tipoTex[i] = gfx.newQuad(split2[1], split2[2], split2[3], split2[4], mapa.tex:getWidth(), mapa.tex:getHeight())
+			mapa.propTex[i] = {}
+			mapa.propTex[i].desX = split2[5]
+			mapa.propTex[i].desY = split2[6]
+			mapa.propTex[i].w = split2[7]
+			mapa.propTex[i].h = split2[8]
+
 		end
 	end
 
@@ -116,7 +123,7 @@ function mapa:update()
     		for j = math.floor(((mono.cuadColi.y - ht/2)/ht)-3), math.floor(((mono.cuadColi.y + ht/2)/ht)+3) do
     			if j >=0 then
     				for a, v in pairs(mapa.objetos[i][j]) do
-    					mapa.batch:addq(v.quad, v.cuadColi.x, v.cuadColi.y)
+    					mapa.batch:addq(mapa.tipoTex[v.tipo], v.cuadColi.x - v.cuadColi.desX, v.cuadColi.y - v.cuadColi.desY)
     				end
 				end
     		end

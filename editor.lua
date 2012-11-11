@@ -12,7 +12,7 @@ function guardarMapa(  )
 	for k, r in pairs(mapa.objetos) do
 		for i, k in pairs(r) do
 			for j, v in pairs(k) do
-				cont = cont .. v.tipo .. " " .. v.cuadColi.x .. " " ..v.cuadColi.y .. " " .. v.cuadColi.w .. " " .. v.cuadColi.h .. "/"
+				cont = cont .. v.tipo .. " " .. v.cuadColi.x .. " " ..v.cuadColi.y .. " " .. v.cuadColi.w .. " " .. v.cuadColi.h .. " " .. v.cuadColi.desX .. " " .. v.cuadColi.desY .. "/"
 			end
 		end
 	end
@@ -27,7 +27,7 @@ function cargarMapa( nombreMapa )
 		split2 = v:split(" ")
 		if (i ~= table.getn(split)) then
 			local o1 = new("objetoMapa")
-			o1:init(tonumber(split2[2]), tonumber(split2[3]), tonumber(split2[4]), tonumber(split2[5]), tonumber(split2[1]), mapa.tipoTex[tonumber(split2[1])])
+			o1:init(tonumber(split2[1]), tonumber(split2[2]), tonumber(split2[3]), tonumber(split2[4]), tonumber(split2[5]), tonumber(split2[6]), tonumber(split2[7]))
 			mapa:ubicarObjeto(o1)
 		end
 	end
@@ -47,7 +47,12 @@ function updateEditor()
 	batchEditor:bind()
 	batchEditor:clear()
 	if (posObjetoEditor ~= 0) then
-		local x1, y1, w, h = mapa.tipoTex[posObjetoEditor]:getViewport()		
+		--local x1, y1, w, h = mapa.tipoTex[posObjetoEditor]:getViewport()		
+		local desX = mapa.propTex[posObjetoEditor].desX
+		local desY = mapa.propTex[posObjetoEditor].desY
+		local w = mapa.propTex[posObjetoEditor].w
+		local h = mapa.propTex[posObjetoEditor].h
+
 		x = math.floor(x - (w/2))
 		y = math.floor(y - (h/2))
 		batchEditor:setColor(255,255,255,200)
@@ -55,7 +60,7 @@ function updateEditor()
 		if ponerObjeto then
 			local o1 = new("objetoMapa")
 			print(h)
-			o1:init(x, y, w, h, posObjetoEditor, mapa.tipoTex[posObjetoEditor])
+			o1:init(posObjetoEditor, x+desX, y+desY, w, h, desX, desY)
 			mapa:ubicarObjeto(o1)
 			ponerObjeto = false
 		end

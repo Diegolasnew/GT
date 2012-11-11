@@ -29,6 +29,8 @@ function love.load()
 
 	local asd = {}
 
+    mono.fisica = false
+
 end	
 
 function love.update( dt )
