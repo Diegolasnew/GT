@@ -1,6 +1,6 @@
 local spriteAnim = {}
 	
-	spriteAnim.tex = gfx.newImage("gfx/mega2.png")	
+	spriteAnim.tex = gfx.newImage("gfx/mega.png")	
 	spriteAnim.tex2 = gfx.newImage("gfx/megaSal.png")
 	spriteAnim.tex3 = gfx.newImage("gfx/megaCai.png")
 	spriteAnim.tex4 = gfx.newImage("gfx/megaNOr.png")
@@ -27,7 +27,7 @@ function spriteAnim:init(  )
 	spriteAnim.batchs["normal"] = gfx.newSpriteBatch(spriteAnim.tex4, 2)
 
 	print("inicializa")
-	for i=0, (spriteAnim.tex:getWidth()/38)-1 do
+	for i=0, 9 do
 		spriteAnim.quads["corriendo"][i] = gfx.newQuad(i*38, 0, 38, 35, spriteAnim.tex:getWidth(), spriteAnim.tex:getHeight())	
 	end
 	spriteAnim.quads["saltando"][0] = gfx.newQuad(0, 0, 19, 46, spriteAnim.tex2:getWidth(), spriteAnim.tex2:getHeight())	

@@ -15,7 +15,7 @@ hola = gfx.newImage("gfx/megaNOr.png")
 function love.load()
 	initEditor()
 	mono = new("objeto")
-	mono:init(100, 60, 25, 30, 0, nil)
+	mono:init(150, 80, 25, 30, 0, nil)
 	cf = 0
 	vcf = 200
 	mapa:init()
@@ -41,7 +41,6 @@ function love.update( dt )
 	mapa:update()
 	colis = mapa:colisiona(mono.cuadColi.x, mono.cuadColi.y, mono.cuadColi.w, mono.cuadColi.h)
 	if editor then
-
 		updateEditor()
 	end
 end	
@@ -52,6 +51,10 @@ function love.keyreleased(key)
    end	
    if key == "f2" then
          editor = not editor
+         mono.fisica = false
+   end	
+   if key == "f3" then
+         mono.fisica = not mono.fisica 
    end	
    if key == "f5" then
          guardarMapa()
@@ -61,6 +64,7 @@ function love.keyreleased(key)
    end
    if key == "f8" then
          mapa:borrarMapa("map")
+         mono.fisica = false
    end
 end
 
@@ -141,6 +145,8 @@ function love.draw()
     	gfx.print("c = ".. tostring (colis), 10, 50)
     	gfx.print("x2 = ".. mono.cuadColi.x + mono.cuadColi.w, 10, 70)
     	gfx.print("y2 = ".. mono.cuadColi.y + mono.cuadColi.h, 10, 90)
+    	gfx.print("Estado = ".. mono.estado, 10, 110)
+    	gfx.print("Lugar = ".. mono.lugar, 10, 130)
     	if editor then
     		local x, y = love.mouse.getPosition()
     		gfx.print("xMouseReal = ".. x, 160, 10)
@@ -152,13 +158,15 @@ function love.draw()
     else
     	gfx.setColor(200,150,200,255)
     	gfx.print("F1 Debug ", 10, 10)
-    	gfx.print("F2 Editor (rueda del mouse, click izquierdo crea, click derecho elimina)", 10, 30)
-    	gfx.print("F5 Guardar Mapa ", 10, 50)
-    	gfx.print("F6 Cargar Mapa ", 10, 70)
-    	gfx.print("Movimiento: izquierda o (a), derecha o (b)", 10, 90)
-    	gfx.print("Salto: espacio ", 10, 110)
+    	gfx.print("F2 Editor y no física (rueda del mouse, click izquierdo crea, click derecho elimina)", 10, 30)
+    	gfx.print("F3 Activa o Desactiva la física", 10, 50)
+    	gfx.print("F5 Guardar Mapa ", 10, 70)
+    	gfx.print("F6 Cargar Mapa ", 10, 90)
+    	gfx.print("Movimiento: izquierda o (a), derecha o (b)", 10, 110)
+    	gfx.print("Salto: espacio ", 10, 130)
 	end
-
+	gfx.setColor(0,255,0,255)
+	gfx.print("FPS: "..tostring(love.timer.getFPS( )), gfx:getWidth()-80, 0)
 end	
 
 function getArt(mp3)

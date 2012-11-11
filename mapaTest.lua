@@ -14,10 +14,9 @@ mapa.jugadores = {} -- todos los jugadores en el mapa
 mapa.sizeCelda = 100
 mapa.ancho = 70
 mapa.alto = 70
-mapa.tex = gfx.newImage('gfx/tex.png')
+mapa.tex = gfx.newImage('gfx/gen.png')
 mapa.tipoTex = {}
 mapa.batch = nil
-
 
 
 function mapa:init()
@@ -36,14 +35,17 @@ function mapa:init()
 			end
 	end	
 
+	local data = fsy.read("gfx/genProp.txt")
+	local split = data:split("/")
+	for i, v in pairs(split) do
+		split2 = v:split(" ")
+		if (i ~= table.getn(split)) then
+			mapa.tipoTex[i] = gfx.newQuad(split2[1], split2[2], split2[3], split2[4], mapa.tex:getWidth(), mapa.tex:getHeight())		
+		end
+	end
 
 	mapa.batch = gfx.newSpriteBatch(mapa.tex, 300)
-	mapa.tipoTex[1] = gfx.newQuad(0, 0, 327, 51, mapa.tex:getWidth(), mapa.tex:getHeight())
-	mapa.tipoTex[2] = gfx.newQuad(0, 51, 68, 189, mapa.tex:getWidth(), mapa.tex:getHeight())
-	mapa.tipoTex[3] = gfx.newQuad(68, 51, 89, 95, mapa.tex:getWidth(), mapa.tex:getHeight())
 
-	-- screen_width = love.graphics.getWidth()
-	-- screen_height = love.graphics.getHeight()
 end
 
 function mapa:ubicarObjeto(objeto)
@@ -52,7 +54,7 @@ function mapa:ubicarObjeto(objeto)
 			mapa.matrizObjetos[math.floor(i)][math.floor(j)][objeto] = objeto
 		end
 	end
-	local dir = mapa.objetos[math.floor(objeto.cuadColi.x/mapa.sizeCelda)][math.floor(objeto.cuadColi.y/mapa.sizeCelda)]
+	local dir = mapa.objetos[math.floor(objeto.cuadColi.x/gfx:getWidth())][math.floor(objeto.cuadColi.y/gfx:getHeight())]
 	dir[table.getn(dir)+1] = objeto
 
 end
@@ -81,15 +83,17 @@ function mapa:eliminarObjeto( x, y )
 end
 
 function mapa:colisiona( x, y, w, h )
-	for i = math.floor(x/mapa.sizeCelda), ((x+w)/mapa.sizeCelda) do
-		for j = math.floor(y/mapa.sizeCelda), ((y+h)/mapa.sizeCelda)  do
-			local q = {x = x, y = y, w = w, h = h}
-			for k, v in pairs(mapa.matrizObjetos[math.floor(i)][math.floor(j)]) do
-				if colision(q, v.cuadColi) then
-					return true, v
+	if x >= 0 and y >= 0 then
+		for i = math.floor(x/mapa.sizeCelda), ((x+w)/mapa.sizeCelda) do
+			for j = math.floor(y/mapa.sizeCelda), ((y+h)/mapa.sizeCelda)  do
+				local q = {x = x, y = y, w = w, h = h}
+				for k, v in pairs(mapa.matrizObjetos[math.floor(i)][math.floor(j)]) do
+					if colision(q, v.cuadColi) then
+						return true, v
+					end
 				end
-			end
-		end	
+			end	
+		end
 	end
 	return false
 end
@@ -107,9 +111,9 @@ function mapa:update()
 	mapa.batch:bind()
     mapa.batch:clear()
 
-    for i = math.floor(((mono.cuadColi.x - wt)/mapa.sizeCelda)-3), math.floor(((mono.cuadColi.x + wt)/mapa.sizeCelda)+3) do
+    for i = math.floor(((mono.cuadColi.x - wt/2)/wt)-3), math.floor(((mono.cuadColi.x + wt/2)/wt)+3) do
     	if i>=0 then
-    		for j = math.floor(((mono.cuadColi.y - ht)/mapa.sizeCelda)-3), math.floor(((mono.cuadColi.y + ht)/mapa.sizeCelda)+3) do
+    		for j = math.floor(((mono.cuadColi.y - ht/2)/ht)-3), math.floor(((mono.cuadColi.y + ht/2)/ht)+3) do
     			if j >=0 then
     				for a, v in pairs(mapa.objetos[i][j]) do
     					mapa.batch:addq(v.quad, v.cuadColi.x, v.cuadColi.y)
