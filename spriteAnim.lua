@@ -1,9 +1,9 @@
 local spriteAnim = {}
 	
-	spriteAnim.tex = gfx.newImage("gfx/mega.png")	
-	spriteAnim.tex2 = gfx.newImage("gfx/megaSal.png")
-	spriteAnim.tex3 = gfx.newImage("gfx/megaCai.png")
-	spriteAnim.tex4 = gfx.newImage("gfx/megaNOr.png")
+	spriteAnim.tex = gfx.newImage("gfx/mov1.png")	
+	spriteAnim.tex2 = gfx.newImage("gfx/sal1.png")
+	spriteAnim.tex3 = gfx.newImage("gfx/cai1.png")
+	spriteAnim.tex4 = gfx.newImage("gfx/nor1.png")
 
 	spriteAnim.quads = {}
 	spriteAnim.batchs = {}
@@ -27,16 +27,17 @@ function spriteAnim:init(  )
 	spriteAnim.batchs["normal"] = gfx.newSpriteBatch(spriteAnim.tex4, 2)
 
 	print("inicializa")
-	for i=0, 9 do
-		spriteAnim.quads["corriendo"][i] = gfx.newQuad(i*38, 0, 38, 35, spriteAnim.tex:getWidth(), spriteAnim.tex:getHeight())	
+	for i=0, 11 do
+		spriteAnim.quads["corriendo"][i] = gfx.newQuad(i*84, 0, 84, 87, spriteAnim.tex:getWidth(), spriteAnim.tex:getHeight())	
 	end
-	spriteAnim.quads["saltando"][0] = gfx.newQuad(0, 0, 19, 46, spriteAnim.tex2:getWidth(), spriteAnim.tex2:getHeight())	
-	spriteAnim.quads["cayendo"][0] = gfx.newQuad(0, 0, 23, 41, spriteAnim.tex3:getWidth(), spriteAnim.tex3:getHeight())	
-	spriteAnim.quads["normal"][0] = gfx.newQuad(0, 0, 30, 34, spriteAnim.tex4:getWidth(), spriteAnim.tex4:getHeight())	
+	spriteAnim.quads["saltando"][0] = gfx.newQuad(0, 0, 84, 87, spriteAnim.tex2:getWidth(), spriteAnim.tex2:getHeight())	
+	spriteAnim.quads["cayendo"][0] = gfx.newQuad(0, 0, 84, 87, spriteAnim.tex3:getWidth(), spriteAnim.tex3:getHeight())	
+	spriteAnim.quads["normal"][0] = gfx.newQuad(0, 0, 84, 87, spriteAnim.tex4:getWidth(), spriteAnim.tex4:getHeight())	
 
 end
 
 function spriteAnim:siguiente(estado, ori)
+	
 	if spriteAnim.estado ~= estado then
 		spriteAnim.pos = 0
 	end

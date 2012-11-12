@@ -15,7 +15,7 @@ hola = gfx.newImage("gfx/megaNOr.png")
 function love.load()
 	initEditor()
 	mono = new("objeto")
-	mono:init(150, 80, 25, 30, 0, nil)
+	mono:init(150, 80, 50, 87, 0, nil)
 	cf = 0
 	vcf = 200
 	mapa:init()
@@ -116,9 +116,9 @@ end
 
 
 function love.draw()
-
+	gfx.setColor(140, 216, 251)
+	gfx.rectangle( "fill", 0, 0, gfx.getWidth(), gfx.getHeight() )
 	gfx.push()
-
 	gfx.translate(translate[1], translate[2])
 	--gfx.setColor(cf, 255, cf,255)
 	--gfx.rectangle( "fill", 300, 300, 1000, 500)
@@ -167,7 +167,7 @@ function love.draw()
     	gfx.print("Movimiento: izquierda o (a), derecha o (b)", 10, 110)
     	gfx.print("Salto: espacio ", 10, 130)
 	end
-	gfx.setColor(0,255,0,255)
+	gfx.setColor(255,0,0,255)
 	gfx.print("FPS: "..tostring(love.timer.getFPS( )), gfx:getWidth()-80, 0)
 end	
 

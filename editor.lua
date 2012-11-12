@@ -27,7 +27,7 @@ function cargarMapa( nombreMapa )
 		split2 = v:split(" ")
 		if (i ~= table.getn(split)) then
 			local o1 = new("objetoMapa")
-			o1:init(tonumber(split2[1]), tonumber(split2[2]), tonumber(split2[3]), tonumber(split2[4]), tonumber(split2[5]), tonumber(split2[6]), tonumber(split2[7]))
+			o1:init(math.floor(tonumber(split2[1])), math.floor(tonumber(split2[2])), math.floor(tonumber(split2[3])), math.floor(tonumber(split2[4])), math.floor(tonumber(split2[5])), math.floor(tonumber(split2[6])), math.floor(tonumber(split2[7])))
 			mapa:ubicarObjeto(o1)
 		end
 	end
